@@ -17,19 +17,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: docker
+  name: jenkins-docker
 spec:
   selector:
     matchLabels:
-      run: docker
+      run: jenkins-docker
   replicas: 1
   template:
     metadata:
       labels:
-        run: docker
+        run: jenkins-docker
     spec:
       containers:
-        - name: docker
+        - name: jenkins-docker
           image: docker:dind
           env:
             - name: DOCKER_TLS_CERTDIR
@@ -45,3 +45,6 @@ spec:
         - name: jenkins-docker-certs
           persistentVolumeClaim:
             claimName: jenkins-docker-certs
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins-data
