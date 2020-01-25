@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-docker-certs
+spec:
+  accessModes:
+    - ReadWriteOnce
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker
+spec:
+  selector:
+    matchLabels:
+      run: docker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: docker
+    spec:
+      containers:
+        - name: docker
+          image: docker:dind
+          volumeMounts:
+            - mountPath: "/certs/client"
+              name: jenkins-docker-certs
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: 2376
+      volumes:
+        - name: jenkins-docker-certs
+          persistentVolumeClaim:
+            claimName: jenkins-docker-certs
