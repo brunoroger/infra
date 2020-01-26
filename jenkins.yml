@@ -97,6 +97,7 @@ spec:
           volumeMounts:
             - mountPath: "/certs/client"
               name: jenkins-docker-certs
+              readOnly: true
             - mountPath: "/var/jenkins_home"
               name: jenkins-data
           ports:
