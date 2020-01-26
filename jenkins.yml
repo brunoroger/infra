@@ -4,7 +4,7 @@ metadata:
   name: jenkins-docker-certs
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 8Gi
@@ -15,7 +15,7 @@ metadata:
   name: jenkins-data
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 8Gi
