@@ -120,6 +120,5 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-      protocol: HTTP
   selector:
     run: jenkins
