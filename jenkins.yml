@@ -89,11 +89,11 @@ spec:
       containers:
         - name: jenkins
           image: jenkinsci/blueocean
-          #env:
-            #- name: DOCKER_CERT_PATH
-              #value: "/certs/client"
-            #- name: DOCKER_TLS_VERIFY
-              #value: "1"
+          env:
+            - name: DOCKER_CERT_PATH
+              value: "/certs/client"
+            - name: DOCKER_TLS_VERIFY
+              value: "1"
           #volumeMounts:
             #- mountPath: "/certs/client"
               #name: jenkins-docker-certs
