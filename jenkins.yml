@@ -94,20 +94,20 @@ spec:
               value: "/certs/client"
             - name: DOCKER_TLS_VERIFY
               value: "1"
-          #volumeMounts:
-            #- mountPath: "/certs/client"
-              #name: jenkins-docker-certs
-            #- mountPath: "/var/jenkins_home"
-              #name: jenkins-data
+          volumeMounts:
+            - mountPath: "/certs/client"
+              name: jenkins-docker-certs
+            - mountPath: "/var/jenkins_home"
+              name: jenkins-data
           ports:
             - containerPort: 8080
-      #volumes:
-        #- name: jenkins-docker-certs
-          #persistentVolumeClaim:
-            #claimName: jenkins-docker-certs
-        #- name: jenkins-data
-          #persistentVolumeClaim:
-            #claimName: jenkins-data
+      volumes:
+        - name: jenkins-docker-certs
+          persistentVolumeClaim:
+            claimName: jenkins-docker-certs
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins-data
 ---
 apiVersion: v1
 kind: Service
