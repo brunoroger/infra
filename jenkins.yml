@@ -54,3 +54,18 @@ spec:
         - name: jenkins-data
           persistentVolumeClaim:
             claimName: jenkins-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-docker
+  labels:
+    run: jenkins-docker
+spec:
+  type: NodePort
+  ports:
+    - port: 2376
+      targetPort: 2376
+      protocol: TCP
+  selector:
+    run: jenkins-docker
