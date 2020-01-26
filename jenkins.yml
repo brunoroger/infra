@@ -43,6 +43,8 @@ spec:
           volumeMounts:
             - mountPath: "/certs/client"
               name: jenkins-docker-certs
+            - mountPath: "/var/jenkins_home"
+              name: jenkins-data
           securityContext:
             privileged: true
           ports:
@@ -69,3 +71,55 @@ spec:
       protocol: TCP
   selector:
     run: jenkins-docker
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+  selector:
+    matchLabels:
+      run: jenkins
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: jenkins
+    spec:
+      containers:
+        - name: jenkins
+          image: jenkinsci/blueocean
+          env:
+            - name: DOCKER_CERT_PATH
+              value: "/certs/client"
+            - name: DOCKER_TLS_VERIFY
+              value: "1"
+          volumeMounts:
+            - mountPath: "/certs/client"
+              name: jenkins-docker-certs
+            - mountPath: "/var/jenkins_home"
+              name: jenkins-data
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: jenkins-docker-certs
+          persistentVolumeClaim:
+            claimName: jenkins-docker-certs
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  labels:
+    run: jenkins
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: HTTP
+  selector:
+    run: jenkins
