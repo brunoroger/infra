@@ -1,7 +1,6 @@
 # INFRA
 
-## Steps apply for GCP:
+## instructions for GCP:
 
-- `gcloud compute disks create --size=4GB --zone=us-central1-a nfs-disk`
-- `kubectl apply -f volumes.yml`
-- `kubectl apply -f jenkins.yml`
+- Install: `make install`
+- Remove: `make remove`
