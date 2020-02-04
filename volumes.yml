@@ -47,31 +47,31 @@ spec:
       port: 111
   selector:
     role: nfs-server
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: jenkins-docker-certs-pv
-spec:
-  capacity:
-    storage: 2Gi
-  accessModes:
-    - ReadWriteMany
-  nfs:
-    server: nfs-server.default.svc.cluster.local
-    path: "/"
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: jenkins-docker-certs
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ""
-  resources:
-    requests:
-      storage: 2Gi
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: jenkins-docker-certs-pv
+# spec:
+#   capacity:
+#     storage: 2Gi
+#   accessModes:
+#     - ReadWriteMany
+#   nfs:
+#     server: nfs-server.default.svc.cluster.local
+#     path: "/"
+# ---
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: jenkins-docker-certs
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   storageClassName: ""
+#   resources:
+#     requests:
+#       storage: 2Gi
 ---
 apiVersion: v1
 kind: PersistentVolume
