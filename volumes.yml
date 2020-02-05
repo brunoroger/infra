@@ -29,9 +29,7 @@ spec:
             name: nfs-pvc
       volumes:
         - name: nfs-pvc
-          gcePersistentDisk:
-            pdName: nfs-disk
-            fsType: ext4
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
