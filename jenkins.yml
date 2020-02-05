@@ -37,7 +37,6 @@ metadata:
   labels:
     run: jenkins-docker
 spec:
-  type: LoadBalancer
   ports:
     - port: 2376
       targetPort: 2376
