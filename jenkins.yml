@@ -21,6 +21,8 @@ spec:
           volumeMounts:
             - mountPath: "/certs/client"
               name: jenkins-docker-certs
+            - mountPath: "/var/jenkins_home"
+              name: jenkins-data
           securityContext:
             privileged: true
           ports:
@@ -29,6 +31,9 @@ spec:
         - name: jenkins-docker-certs
           persistentVolumeClaim:
             claimName: jenkins-docker-certs
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins-data
 ---
 apiVersion: v1
 kind: Service
@@ -58,6 +63,9 @@ spec:
       labels:
         run: jenkins
     spec:
+      securityContext:
+        fsGroup: 1000 
+        runAsUser: 0
       containers:
         - name: jenkins
           image: jenkinsci/blueocean
@@ -70,12 +78,17 @@ spec:
             - mountPath: "/certs/client"
               name: jenkins-docker-certs
               readOnly: true
+            - mountPath: "/var/jenkins_home"
+              name: jenkins-data
           ports:
             - containerPort: 8080
       volumes:
         - name: jenkins-docker-certs
           persistentVolumeClaim:
             claimName: jenkins-docker-certs
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins-data
 ---
 apiVersion: v1
 kind: Service
