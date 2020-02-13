@@ -12,7 +12,7 @@ services:
         - '2376:2376'
     image: 'docker:dind'
   blueocean:
-    container_name: jenkins-blueocean
+    container_name: jenkins
     environment:
         - DOCKER_HOST=tcp://docker:2376
         - DOCKER_CERT_PATH=/certs/client
@@ -23,7 +23,7 @@ services:
     ports:
         - '8080:8080'
         - '50000:50000'
-    image: jenkinsci/blueocean
+    image: bschiochet/cicd
     depends_on:
       - docker
 volumes:
