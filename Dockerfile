@@ -1,17 +1,19 @@
-FROM jenkins/jenkins:latest
+FROM jenkinsci/blueocean:latest
 
 USER root
 
-RUN apt-get update
-RUN apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
-RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+RUN apk -U add py-pip
 
-RUN apt-get update
-RUN apt-get -y install docker-ce
+RUN apk -U add python-dev
 
-RUN curl -L "https://github.com/docker/compose/releases/download/1.25.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+RUN apk -U add libffi-dev
 
-RUN chmod +x /usr/local/bin/docker-compose
+RUN apk -U add openssl-dev
 
-RUN /usr/local/bin/install-plugins.sh
+RUN apk -U add gcc
+
+RUN apk -U add libc-dev
+
+RUN apk -U add make
+
+RUN pip install docker-compose
