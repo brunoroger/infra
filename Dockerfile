@@ -17,3 +17,7 @@ RUN apk -U add libc-dev
 RUN apk -U add make
 
 RUN pip install docker-compose
+
+USER jenkins
+
+ENV JAVA_OPTS=-Djenkins.model.Jenkins.crumbIssuerProxyCompatibility=true
